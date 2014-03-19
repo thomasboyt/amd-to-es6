@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var convert = require('./index');
 var path = require('path');
 var fs = require('fs');
