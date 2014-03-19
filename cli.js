@@ -4,16 +4,16 @@ var fs = require('fs');
 
 var opts = require('nomnom')
   .nocolors()
-  .script('es6-module-transpiler')
+  .script('amd-to-es6')
   .options({
     'path': {
-      help: 'Path to source file(s).',
+      help: 'Path to AMD file(s).',
       required: true,
       list: true,
       position: 0
     },
     'dest': {
-      help: 'Destination folder for transpiled files.\t[required]',
+      help: 'Destination folder for ES6ified files.\t[required]',
       metavar: 'FOLDER',
       required: true
     }

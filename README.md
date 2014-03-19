@@ -22,7 +22,7 @@ This totally explodes if you do any kind of weird stuff with AMD, like defining 
 You can use it from the command line like:
 
 ```
-node cli.js fixtures/foo.js --dest tmp/
+amd-to-es6 fixtures/foo.js --dest tmp/
 ```
 
 And it will output to `tmp/fixtures/foo.js`. You can also give it a shell wildcard that expands into a whole bunch of files:
