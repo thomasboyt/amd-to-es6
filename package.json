@@ -1,12 +1,15 @@
 {
   "name": "amd-to-es6",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Convert AMD modules to ES6",
   "main": "index.js",
+  "bin": {
+    "amd-to-es6-": "./cli.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Thomas Boyt",
   "license": "MIT",
   "dependencies": {
     "recast": "~0.5.9",
