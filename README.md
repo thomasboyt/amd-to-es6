@@ -17,8 +17,6 @@ import Bar from 'bar';
 export default 'hi!';
 ```
 
-This totally explodes if you do any kind of weird stuff with AMD, like defining something that isn't just a callback, or using the CJS wrapper. So watch out for that.
-
 You can use it from the command line like:
 
 ```
