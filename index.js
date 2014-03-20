@@ -57,11 +57,12 @@ module.exports = function convert(source) {
           // replace the return in the module w/ export default
           for (var j in content) {
             if ( n.ReturnStatement.check(content[j]) ) {
-              content[j] = {
-                type: 'ExportDeclaration',
-                default: true,
-                declaration: content[j].argument
-              };
+              content[j] = b.exportDeclaration(
+                true,
+                content[j].argument,
+                [],
+                null
+              );
             }
           }
 
