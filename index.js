@@ -19,16 +19,37 @@ function generateImportsForAMD(deps, params) {
   });
 }
 
-/*
- * |\
- * | \
- * |  \
- * |   \  This should probably be refactored
- * |   /  to not be a pyramid of doom
- * |  /
- * | /
- * |/
- */
+function rewriteFunctionExpression(deps, fnExpression) {
+  var content = fnExpression.body.body;
+  var imports = [];
+  if (deps) {
+    imports = generateImportsForAMD(deps, fnExpression.params);
+  }
+
+  // replace the return in the module w/ export default
+  for (var j in content) {
+    if ( n.ReturnStatement.check(content[j]) ) {
+      content[j] = b.exportDeclaration(
+        true,
+        content[j].argument,
+        [],
+        null
+      );
+    }
+  }
+
+  return imports.concat(content);
+}
+
+function rewriteObjectExpression(source) {
+  return b.exportDeclaration(
+    true,
+    source,
+    [],
+    null
+  );
+}
+
 module.exports = function convert(source) {
   var ast = recast.parse(source);
 
@@ -43,30 +64,22 @@ module.exports = function convert(source) {
           var content;
 
           if (args.length === 1) {
-            content = args[0].body.body;
+            content = args[0];
           } else {
             deps = args[0].elements;
-            content = args[1].body.body;
+            content = args[1];
           }
 
-          var imports = [];
-          if (deps) {
-            imports = generateImportsForAMD(deps, args[1].params);
+          var newBody;
+          if ( n.FunctionExpression.check(content) ) {
+            newBody = rewriteFunctionExpression(deps, content);
+          } else if ( n.ObjectExpression.check(content) ) {
+            newBody = rewriteObjectExpression(content);
+          } else {
+            // this sucks but I am too tired to think of better wording
+            throw new Error('Couldn\'t compile the definition of this module');
           }
 
-          // replace the return in the module w/ export default
-          for (var j in content) {
-            if ( n.ReturnStatement.check(content[j]) ) {
-              content[j] = b.exportDeclaration(
-                true,
-                content[j].argument,
-                [],
-                null
-              );
-            }
-          }
-
-          var newBody = imports.concat(content);
           ast.program.body.splice(idx, 1, newBody);
           ast.program.body = _.flatten(ast.program.body);
           break;

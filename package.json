@@ -7,7 +7,7 @@
     "amd-to-es6": "./cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha spec.js -C"
   },
   "author": "Thomas Boyt",
   "license": "MIT",
@@ -19,6 +19,7 @@
     "glob": "~3.2.9"
   },
   "devDependencies": {
-    "chai": "~1.9.1"
+    "chai": "~1.9.1",
+    "mocha": "~1.18.2"
   }
 }
