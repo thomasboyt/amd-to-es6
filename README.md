@@ -13,6 +13,7 @@ Into this:
 ```javascript
 import Foo from 'foo';
 import Bar from 'bar';
+import 'baz';
 
 export default 'hi!';
 ```
